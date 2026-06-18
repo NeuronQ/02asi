@@ -44,6 +44,9 @@ coverage.xml
 profile_default/
 ipython_config.py
 
+# nbkernel.py persistent-kernel runtime state (connection file, pid, logs)
+.nbkernel/
+
 # Environment variables
 .env
 .env.*

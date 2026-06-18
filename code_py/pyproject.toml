@@ -12,4 +12,6 @@ dependencies = [
 dev = [
     "ipykernel>=7.3.0",
     "ipython>=9.14.1",
+    "jupyterlab>=4.5.9",
+    "nbconvert>=7.17.1",
 ]
