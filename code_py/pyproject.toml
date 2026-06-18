@@ -1,0 +1,15 @@
+[project]
+name = "asi"
+version = "0.1.0"
+description = "Minimal educational Python app (no dependencies)"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.4.6",
+    "torch>=2.12.1",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "ipython>=9.14.1",
+]
