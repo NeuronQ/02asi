@@ -60,7 +60,7 @@ Cursor created. From that point you share state in both directions.
 uv run python nbkernel.py status                 # server + attached kernel
 uv run python nbkernel.py list                   # list notebook cells with indices
 uv run python nbkernel.py run-code "print(x)"    # run code in the shared kernel
-uv run python nbkernel.py run-cell 4             # run cell 4's source in the kernel
+uv run python nbkernel.py run-cell 4 --write     # run cell 4's source; write output back to the .ipynb
 uv run python nbkernel.py vars                   # list variables defined in the kernel
 uv run python nbkernel.py restart-kernel         # clear all state
 uv run python nbkernel.py stop                   # shut the server down
@@ -72,8 +72,11 @@ Runtime files (server PID, token, logs) live in `.nbkernel/` and are gitignored.
 
 - **Restarting the server** invalidates the URL/token: reconnect Cursor's kernel
   picker and have the agent re-`attach`.
-- **Outputs**: when sharing with Cursor, the agent reports cell output in chat and
-  does not write it back into `02asi.ipynb` by default (Cursor owns the document).
+- **Outputs**: by default the agent runs cells with `--write`, persisting outputs
+  back into `02asi.ipynb` so you can see them in Cursor's notebook UI. It only runs
+  without `--write` (reporting output in chat only) if you ask it to. In practice
+  this coexists fine with the notebook open in Cursor; if an output doesn't appear,
+  reload the file when Cursor reports it changed on disk.
 - **One kernel at a time** is the happy path. If several kernels are running on the
   server, `attach` can't tell which notebook is yours — close extras or tell the
   agent which one to use.

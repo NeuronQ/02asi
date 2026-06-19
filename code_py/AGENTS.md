@@ -81,6 +81,17 @@ Optional flags: `--timeout <secs>` (default 120) on the run-* commands.
   `list` first to confirm indices (they shift whenever cells are added/removed).
 - Report results in chat. Do **not** assume the human sees CLI output in their UI.
 
+### 4.2.1 Writing outputs back (default: `--write`)
+
+- **By default, run notebook cells with `--write`** (e.g. `run-cell <idx> --write`,
+  `run-cells <i j …> --write`) so outputs are persisted into `02asi.ipynb` and the
+  human can see them in Cursor's notebook UI. In practice this coexists fine with
+  the notebook open in Cursor.
+- Only run **without** `--write` (report output in chat only) when the human asks
+  you to, or for throwaway inspection via `run-code`.
+- If a written output doesn't show up, the human's editor may not have reloaded the
+  on-disk change; tell them to reload the file when Cursor reports it changed.
+
 ### 4.3 Editing notebook cells
 
 - To change a cell's *source*, edit the `.ipynb` with the notebook editing tool,
@@ -115,9 +126,10 @@ Optional flags: `--timeout <secs>` (default 120) on the run-* commands.
 
 - Never use `nbconvert --execute` (or any "run whole notebook" tool) for stateful
   collaborative work; it spawns a throwaway kernel and recomputes everything.
-- Never write to `02asi.ipynb` outputs while the human has it open in Cursor unless
-  explicitly asked; pass `--write` only when you know Cursor is not editing it,
-  otherwise you'll clash with Cursor's document state.
+- Default to `--write` when executing notebook cells so outputs land in
+  `02asi.ipynb` and are visible in Cursor's UI (see §4.2.1). Drop `--write` only
+  when the human explicitly asks for chat-only output. Do not hand-edit the file's
+  outputs JSON directly — let `--write`/`nbformat` normalize them (see §4.3).
 - Never commit `.nbkernel/`.
 - Always use `uv run …`; never a bare `python`.
 
