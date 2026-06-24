@@ -47,6 +47,9 @@ ipython_config.py
 # nbkernel.py persistent-kernel runtime state (connection file, pid, logs)
 .nbkernel/
 
+# Downloaded datasets (e.g. torchvision MNIST in the notebook)
+data/
+
 # Environment variables
 .env
 .env.*
